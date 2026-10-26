@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kanban Board</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <div><h1>Kanban Board</h1><p id="summary">Loading…</p></div>
+    <button class="btn btn-primary" id="addBtn" type="button">+ New task</button>
+  </header>
+ 
+  <section class="toolbar" aria-label="Search and filters">
+    <label class="sr-only" for="search">Search tasks by title</label>
+    <input class="field" id="search" type="search" placeholder="Search by title…" autocomplete="off">
+    <label class="sr-only" for="priorityFilter">Filter by priority</label>
+    <select class="field" id="priorityFilter">
+      <option value="all">All priorities</option><option value="low">Low</option><option value="medium">Medium</option><option value="high">High</option>
+    </select>
+    <label class="sr-only" for="statusFilter">Filter by status</label>
+    <select class="field" id="statusFilter">
+      <option value="all">All statuses</option><option value="todo">To Do</option><option value="progress">In Progress</option><option value="done">Completed</option>
+    </select>
+  </section>
+ 
+  <div class="no-results" id="noResults" hidden>
+    <strong>No tasks match your filters</strong>
+    <p>Try a different title or reset the filters.</p>
+    <button class="btn" id="clearFilters" type="button">Clear filters</button>
+  </div>
+ 
+  <main class="board" id="board" aria-label="Kanban board"></main>
+  <div class="sr-only" id="live" aria-live="polite"></div>
+</div>
+ 
+<!-- Add / Edit dialog -->
+<dialog id="taskDialog" aria-labelledby="dialogTitle">
+  <form class="dialog-body" id="taskForm" novalidate>
+    <h2 id="dialogTitle">New task</h2>
+    <label>Title <span class="req" aria-hidden="true">*</span>
+      <input class="field" id="fTitle" required maxlength="80">
+      <span class="req" id="titleError" role="alert" hidden>Enter a title for this task.</span>
+    </label>
+    <label>Description <textarea class="field" id="fDesc" rows="3" maxlength="300"></textarea></label>
+    <div class="row">
+      <label>Priority
+        <select class="field" id="fPriority"><option value="low">Low</option><option value="medium" selected>Medium</option><option value="high">High</option></select>
+      </label>
+      <label>Due date <input class="field" id="fDue" type="date"></label>
+    </div>
+    <div class="dialog-actions">
+      <button class="btn" type="button" id="cancelTask">Cancel</button>
+      <button class="btn btn-primary" type="submit" id="saveTask">Save task</button>
+    </div>
+  </form>
+</dialog>
+ 
+<!-- Delete confirmation -->
+<dialog id="deleteDialog" aria-labelledby="delTitle">
+  <div class="dialog-body">
+    <h2 id="delTitle">Delete this task?</h2>
+    <p id="delText" style="margin:0;color:var(--muted)"></p>
+    <div class="dialog-actions">
+      <button class="btn" type="button" id="cancelDelete">Keep task</button>
+      <button class="btn btn-danger" type="button" id="confirmDelete">Delete task</button>
+    </div>
+  </div>
+</dialog>
+<script src="script.js"></script>
+</body>
+</html>
